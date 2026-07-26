@@ -1,53 +1,45 @@
 <?php
 
-//respuesta en formato JSON
+/*
+|
+| Servicio Web - Inicio de Sesión
+|
+| Recibe el usuario y la contraseña en formato JSON,
+| valida las credenciales y devuelve una respuesta.
+|
+*/
+
+//Respuesta en formato JSON
 header("Content-Type: application/json");
 
-//conexión a la bd
-include("config/conexion.php");
+//Incluir archivos necesarios
+require_once("../config/conexion.php");
+require_once("../models/Usuario.php");
 
-//leer los datos enviados
+//Leer datos enviados
 $datos = json_decode(file_get_contents("php://input"), true);
 
-$usuario = $datos["usuario"];
-$password = $datos["password"];
-
-//buscar usuario
-$sql = "SELECT * FROM usuarios WHERE usuario='$usuario'";
-
-$resultado = $conn->query($sql);
-
-//verificar si existe
-if($resultado->num_rows > 0){
-
-    $fila = $resultado->fetch_assoc();
-
-    //comparar la contraseña
-    if(password_verify($password, $fila["password"])){
-
-        echo json_encode([
-            "mensaje"=>"Autenticación satisfactoria",
-            "estado"=>true
-        ]);
-
-    }else{
-
-        echo json_encode([
-            "mensaje"=>"Error en la autenticación",
-            "estado"=>false
-        ]);
-
-    }
-
-}else{
+//Verificar que los datos fueron recibieron
+if (!$datos) {
 
     echo json_encode([
-        "mensaje"=>"Error en la autenticación",
-        "estado"=>false
+        "estado" => false,
+        "mensaje" => "No se recibieron datos."
     ]);
 
+    exit;
 }
 
-$conn->close();
+//Crear el modelo Usuario
+$usuarioModel = new Usuario($conn);
+
+//Validar las credenciales
+$respuesta = $usuarioModel->iniciarSesion(
+    $datos["usuario"],
+    $datos["password"]
+);
+
+//Devolver respuesta
+echo json_encode($respuesta);
 
 ?>

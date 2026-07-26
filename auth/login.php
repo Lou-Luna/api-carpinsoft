@@ -15,6 +15,7 @@ header("Content-Type: application/json");
 //Incluir archivos necesarios
 require_once("../config/conexion.php");
 require_once("../models/Usuario.php");
+require_once("../utils/respuesta.php");
 
 //Leer datos enviados
 $datos = json_decode(file_get_contents("php://input"), true);
@@ -22,10 +23,7 @@ $datos = json_decode(file_get_contents("php://input"), true);
 //Verificar que los datos fueron recibieron
 if (!$datos) {
 
-    echo json_encode([
-        "estado" => false,
-        "mensaje" => "No se recibieron datos."
-    ]);
+    Respuesta::enviar(true, "Usuario registrado.");
 
     exit;
 }

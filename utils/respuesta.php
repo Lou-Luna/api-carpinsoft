@@ -29,6 +29,8 @@ class Respuesta
         }
 
         echo json_encode($respuesta);
+
+        exit;
     }
 }
 ?>

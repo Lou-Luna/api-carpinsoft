@@ -93,9 +93,8 @@ public function registrar($nombres, $apellidos, $usuario, $password, $rol)
     }
 
     return[
-        respuesta::enviar(false, "No fue posible registrar el usuario")
-        //"estado" => false,
-        //"mensaje" => "No fue posible registrar el usuario."
+        "estado" => false,
+        "mensaje" => "No fue posible registrar el usuario."
     ];
 }
 

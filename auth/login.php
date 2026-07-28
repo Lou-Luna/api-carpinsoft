@@ -15,18 +15,17 @@ header("Content-Type: application/json");
 //Incluir archivos necesarios
 require_once("../config/conexion.php");
 require_once("../models/Usuario.php");
-require_once("../utils/respuesta.php");
+require_once("../utils/Respuesta.php");
 
 //Leer datos enviados
 $datos = json_decode(file_get_contents("php://input"), true);
 
 //Verificar que los datos fueron recibieron
-if (!$datos) {
-
-    Respuesta::enviar(true, "Usuario registrado.");
-
-    exit;
-}
+if (
+    empty($datos["usuario"]) || empty($datos["password"])) 
+    {
+    Respuesta::enviar(false, "Debe ingresar el usuario y la contraseña.");
+    }
 
 //Crear el modelo Usuario
 $usuarioModel = new Usuario($conn);
@@ -38,6 +37,7 @@ $respuesta = $usuarioModel->iniciarSesion(
 );
 
 //Devolver respuesta
-echo json_encode($respuesta);
+Respuesta::enviar( $respuesta["estado"], $respuesta["mensaje"], $respuesta["usuario"] ?? null
+);
 
 ?>

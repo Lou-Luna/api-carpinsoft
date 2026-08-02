@@ -14,10 +14,10 @@ class Material{
     private $nombre;
     private $cantidad;
 
-    private Proveedor $proveedor;
+    private ?Proveedor $proveedor;
 
      //Constructor
-    public function __construct($idMaterial = null, $nombre = null, $cantidad = null, $proveedor = null) {
+    public function __construct($idMaterial = null, $nombre = null, $cantidad = null, ?Proveedor $proveedor = null) {
         $this->idMaterial = $idMaterial;
         $this->nombre = $nombre;
         $this->cantidad = $cantidad;
@@ -33,7 +33,7 @@ class Material{
     }
 
     public function getNombre(){
-        retunr $this->nombre;
+        return $this->nombre;
     }
 
     public function setNombre($nombre){
@@ -45,7 +45,7 @@ class Material{
     }
 
     public function setCantidad($cantidad){
-        $this->cantiad = $cantidad;
+        $this->cantidad = $cantidad;
     }
 
     public function getProveedor(){
@@ -56,9 +56,10 @@ class Material{
         $this->proveedor = $proveedor;
     }
 
-    //Método opcional para imprimir el objeto como texto
+    // Método opcional para imprimir el objeto como texto
     public function __toString() {
-        return "Material [ID: {$this->idMaterial}, Nombre: {$this->nombre}, Cantidad: {$this->cantidad}, Proveedor: {$this->proveedor}]";
+        $proveedorStr = $this->proveedor ? $this->proveedor->__toString() : "Sin proveedor";
+        return "Material [ID: {$this->idMaterial}, Nombre: {$this->nombre}, Cantidad: {$this->cantidad}, Proveedor: {$proveedorStr}]";
     }
 
 } 

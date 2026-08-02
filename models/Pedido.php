@@ -16,10 +16,10 @@ class Pedido{
     private $estado;
     private $especificacion;
 
-    private Cliente $cliente;
+    private ?Cliente $cliente;
 
     //Constructor
-    public function __construct($idPedido = null, $fecha = null, $estado = null, $especificacion = null, $cliente = null) {
+    public function __construct($idPedido = null, $fecha = null, $estado = null, $especificacion = null, ?Cliente $cliente = null) {
         $this->idPedido = $idPedido;
         $this->fecha = $fecha;
         $this->estado = $estado;
@@ -28,7 +28,7 @@ class Pedido{
     }
 
     public function getIdPedido(){
-        return $this->pedido;
+        return $this->IdPedido;
     }
 
     public function setIdPedido($idPedido){
@@ -60,7 +60,7 @@ class Pedido{
     }
 
     public function getCliente(){
-    return $this->cliente;
+        return $this->cliente;
     }
 
     public function setCliente(Cliente $cliente){
@@ -69,7 +69,8 @@ class Pedido{
 
     //Método opcional para imprimir el objeto como texto
     public function __toString() {
-        return "Pedido [ID: {$this->idPedido}, Fecha: {$this->fecha}, Estado: {$this->estado}, Especificación: {$this->especificacion}, Cliente: {$this->cliente}]";
+        $clienteSrt = $this->cliente ? $this->cliente->__toString() : "Sin proveedor";
+        return "Pedido [ID: {$this->idPedido}, Fecha: {$this->fecha}, Estado: {$this->estado}, Especificación: {$this->especificacion}, Cliente: {$clienteSrt}]";
     }
 }
 ?>

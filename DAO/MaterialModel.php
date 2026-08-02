@@ -60,7 +60,7 @@ public function listar()
 
 public function buscarPorId($id)
 {
-    $sql "SELECT * FROM material WHERE id_materail = ?";
+    $sql  = "SELECT * FROM material WHERE id_materail = ?";
 
     $stmt = $this->conexion->prepare($sql);
 

@@ -11,12 +11,12 @@
 
 class Proveedor {
 
-    private $idPoveedor;
+    private $idProveedor;
     private $nombre;
     private $contacto;
 
     //Constructor
-    public function __construct($idPoveedor = null, $nombre = null, $contacto = null) {
+    public function __construct($idProveedor = null, $nombre = null, $contacto = null) {
         $this->idProveedor = $idPoveedor;
         $this->nombre = $nombre;
         $this->contacto = $contacto;
@@ -26,8 +26,8 @@ class Proveedor {
         return $this->idProveedor;
     }
 
-    public function setIdProveedor($idPoveedor){
-        $this->idProveedor = $idPoveedor;
+    public function setIdProveedor($idProveedor){
+        $this->idProveedor = $idProveedor;
     }    
 
     public function getNombre(){

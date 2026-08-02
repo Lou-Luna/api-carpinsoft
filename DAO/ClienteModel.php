@@ -9,6 +9,7 @@
 |
 */
 
+//Se llama a la clase
 require_once("../models/Cliente.php");
 
 class ClienteModel{
@@ -16,6 +17,14 @@ class ClienteModel{
     public function __construct($conexion){
         $this->conexion = $conexion;
     }
+
+
+/**
+ * Guardar un cliente.
+ *
+ * @param Cliente $cliente
+ * @return bool
+ */
 
 public function guardar(Cliente $cliente)
 {
@@ -34,6 +43,13 @@ public function guardar(Cliente $cliente)
     //Ejecutar 
     return $stmt->execute();
 }
+
+/**
+ * Listar clientes.
+ *
+ * 
+ * @return array
+ */
 
 public function listar()
 {
@@ -58,9 +74,16 @@ public function listar()
         return $clientes;
 }
 
+/**
+ * Buscar un cliente.
+ *
+ * @param int 
+ * @return Cliente
+ */
+
 public function buscarPorId($id)
 {
-    $sql "SELECT * FROM cliente WHERE id_cliente = ?";
+    $sql = "SELECT * FROM cliente WHERE id_cliente = ?";
 
     $stmt = $this->conexion->prepare($sql);
 
@@ -85,6 +108,13 @@ public function buscarPorId($id)
         return null;
 }
 
+/**
+ * Actualizar un cliente.
+ *
+ * @param Cliente $cliente
+ * @return bool 
+ */
+
 public function actualizar(Cliente $cliente)
 {
     $sql = "UPDATE cliente SET nombre = ?, contacto = ?, direccion = ? WHERE id_cliente = ?";
@@ -101,6 +131,13 @@ public function actualizar(Cliente $cliente)
     return $stmt->execute();
 }
 
+/**
+ * Eliminar un cliente.
+ *
+ * @param int 
+ * @return bool 
+ */
+
 public function eliminar($id)
 {
     $sql = "DELETE FROM cliente WHERE id_cliente = ?";
@@ -113,3 +150,5 @@ public function eliminar($id)
 }
 
 }
+
+?>

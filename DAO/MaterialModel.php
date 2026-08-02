@@ -9,6 +9,7 @@
 |
 */
 
+//Se llama a la clase
 require_once("../models/Material.php");
 
 class MaterialModel{
@@ -16,6 +17,13 @@ class MaterialModel{
     public function __construct($conexion){
         $this->conexion = $conexion;
     }
+
+/**
+ * Guardar un material.
+ *
+ * @param Material $material
+ * @return bool
+ */
 
 public function guardar(Material $material)
 {
@@ -29,11 +37,18 @@ public function guardar(Material $material)
     $cantidad = $material->getCantidad();
     $idProveedor = $material->getIdProveedor();
 
-    $stmt->bind_param("sss", $nombre, $cantidad, $idProveedor);
+    $stmt->bind_param("sii", $nombre, $cantidad, $idProveedor);
 
     //Ejecutar 
     return $stmt->execute();
 }
+
+/**
+ * Listar materiales.
+ *
+ * 
+ * @return array
+ */
 
 public function listar()
 {
@@ -58,9 +73,16 @@ public function listar()
         return $materiales;
 }
 
+/**
+ * Buscar un material.
+ *
+ * @param int 
+ * @return Material
+ */
+
 public function buscarPorId($id)
 {
-    $sql  = "SELECT * FROM material WHERE id_materail = ?";
+    $sql  = "SELECT * FROM material WHERE id_materiall = ?";
 
     $stmt = $this->conexion->prepare($sql);
 
@@ -85,6 +107,13 @@ public function buscarPorId($id)
         return null;
 }
 
+/**
+ * Actualizar un material.
+ *
+ * @param Material $material
+ * @return bool 
+ */
+
 public function actualizar(Material $material)
 {
     $sql = "UPDATE material SET nombre = ?, cantidad = ?, id_proveedor = ? WHERE id_material = ?";
@@ -96,10 +125,17 @@ public function actualizar(Material $material)
     $idProveedor = $material->getIdProveedor();
     $id = $material->getIdMaterial();
 
-    $stmt->bind_param("sssi", $nombre, $cantidad, $idProveedor, $id);
+    $stmt->bind_param("siii", $nombre, $cantidad, $idProveedor, $id);
 
     return $stmt->execute();
 }
+
+/**
+ * Eliminar un material.
+ *
+ * @param int 
+ * @return bool 
+ */
 
 public function eliminar($id)
 {
@@ -113,3 +149,5 @@ public function eliminar($id)
 }
 
 }    
+
+?>

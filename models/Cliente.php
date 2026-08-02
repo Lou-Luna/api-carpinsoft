@@ -2,7 +2,7 @@
 
 /*
 |
-| Objeto cliente
+| Clase cliente
 |
 | Esta clase contiene los atributos del cliente
 | 

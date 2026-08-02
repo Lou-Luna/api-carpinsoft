@@ -47,7 +47,7 @@ public function listar()
         {
             $cliente = new Cliente();
 
-            $cliente->setidCliente($fila["id_cliente"]);
+            $cliente->setIdCliente($fila["id_cliente"]);
             $cliente->setNombre($fila["nombre"]);
             $cliente->setContacto($fila["contacto"]);
             $cliente->setDireccion($fila["direccion"]);

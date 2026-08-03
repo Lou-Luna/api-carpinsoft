@@ -38,6 +38,7 @@ public function guardar(Cliente $cliente)
     $contacto = $cliente->getContacto();
     $direccion = $cliente->getDireccion();
 
+    //Asociar parametros
     $stmt->bind_param("sss", $nombre, $contacto, $direccion);
 
     //Ejecutar 
@@ -53,8 +54,10 @@ public function guardar(Cliente $cliente)
 
 public function listar()
 {
+    //Sentencia SQL
     $sql = "SELECT * FROM cliente";
 
+    //Obtener resultado
     $resultado = $this->conexion->query($sql);
 
     $clientes = [];
@@ -83,14 +86,19 @@ public function listar()
 
 public function buscarPorId($id)
 {
+    //Sentencia SQL
     $sql = "SELECT * FROM cliente WHERE id_cliente = ?";
 
+    //Preparar sentencia
     $stmt = $this->conexion->prepare($sql);
 
+    //Asociar parametro
     $stmt->bind_param("i", $id);
 
+    //Ejecutar
     $stmt->execute();
 
+    //Obtener resultado
     $resultado = $stmt->get_result();
 
     if($fila = $resultado->fetch_assoc())
@@ -117,8 +125,10 @@ public function buscarPorId($id)
 
 public function actualizar(Cliente $cliente)
 {
+    //Sentencia SQL
     $sql = "UPDATE cliente SET nombre = ?, contacto = ?, direccion = ? WHERE id_cliente = ?";
 
+    //Preparar sentencia
     $stmt = $this->conexion->prepare($sql);
 
     $nombre = $cliente->getNombre();
@@ -126,6 +136,7 @@ public function actualizar(Cliente $cliente)
     $direccion = $cliente->getDireccion();
     $id = $cliente->getIdCliente();
 
+    //Asociar papametros
     $stmt->bind_param("sssi", $nombre, $contacto, $direccion, $id);
 
     return $stmt->execute();
@@ -140,12 +151,16 @@ public function actualizar(Cliente $cliente)
 
 public function eliminar($id)
 {
+    //Sentencia SQl
     $sql = "DELETE FROM cliente WHERE id_cliente = ?";
 
+    //Preparar sentencia
     $stmt = $this->conexion->prepare($sql);
 
+    //Asociar papametro
     $stmt->bind_param("i",$id);
 
+    //Ejecutar
     return $stmt->execute();
 }
 

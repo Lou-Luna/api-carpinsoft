@@ -35,8 +35,9 @@ public function guardar(Material $material)
 
     $nombre = $material->getNombre();
     $cantidad = $material->getCantidad();
-    $idProveedor = $material->getIdProveedor();
+    $idProveedor = $material->getProveedor() ? $material->getProveedor()->getIdProveedor() : null;
 
+    //Asociar parametros
     $stmt->bind_param("sii", $nombre, $cantidad, $idProveedor);
 
     //Ejecutar 
@@ -52,20 +53,25 @@ public function guardar(Material $material)
 
 public function listar()
 {
+    //Consulta SQL
     $sql = "SELECT * FROM material";
 
+    //Obtener resultado
     $resultado = $this->conexion->query($sql);
 
     $materiales = [];
 
     while($fila = $resultado->fetch_assoc())
         {
+            $proveedor = new Proveedor(); 
+            $proveedor->setIdProveedor($fila["id_proveedor"]);
+
             $material = new Material();
 
             $material->setIdMaterial($fila["id_material"]);
             $material->setNombre($fila["nombre"]);
             $material->setCantidad($fila["cantidad"]);
-            $material->setIdProveedor($fila["id_proveedor"]);
+            $material->setProveedor($proveedor;)
 
             $materiales[] = $material;
         }
@@ -82,24 +88,32 @@ public function listar()
 
 public function buscarPorId($id)
 {
+    //Consulta SQL
     $sql  = "SELECT * FROM material WHERE id_materiall = ?";
 
+    //Preparar sentencia
     $stmt = $this->conexion->prepare($sql);
 
+    //Asociar parametro
     $stmt->bind_param("i", $id);
 
+    //Ejecutar
     $stmt->execute();
 
+    //Obtener resultado
     $resultado = $stmt->get_result();
 
     if($fila = $resultado->fetch_assoc())
         {
+            $proveedor = new Proveedor();
+            $proveedor->setIdProveedor($fila["id_proveedor"]);
+
             $material = new Material();
 
             $material->setIdMaterial($fila["id_material"]);
             $material->setNombre($fila["nombre"]);
             $material->setCantidad($fila["cantidad"]);
-            $material->setIdProveedor($fila["id_proveedor"]);
+            $material->setProveedor($proveedor);
 
             return $material;
         }
@@ -116,17 +130,21 @@ public function buscarPorId($id)
 
 public function actualizar(Material $material)
 {
+    //Sentencia SQL
     $sql = "UPDATE material SET nombre = ?, cantidad = ?, id_proveedor = ? WHERE id_material = ?";
 
+    //Preparar sentencia
     $stmt = $this->conexion->prepare($sql);
 
     $nombre = $material->getNombre();
     $cantidad = $material->getCantidad();
-    $idProveedor = $material->getIdProveedor();
+    $idProveedor = $material->getProveedor() ? $material->getProveedor()->getIdProveedor() : null;
     $id = $material->getIdMaterial();
 
+    //Asociar parametros
     $stmt->bind_param("siii", $nombre, $cantidad, $idProveedor, $id);
 
+    //Ejecutar
     return $stmt->execute();
 }
 
@@ -139,12 +157,16 @@ public function actualizar(Material $material)
 
 public function eliminar($id)
 {
+    //Sentencia SQL
     $sql = "DELETE FROM material WHERE id_material = ?";
 
+    //Prepapar sentencia
     $stmt = $this->conexion->prepare($sql);
 
+    //Asociar parametro
     $stmt->bind_param("i",$id);
 
+    //Ejecutar
     return $stmt->execute();
 }
 

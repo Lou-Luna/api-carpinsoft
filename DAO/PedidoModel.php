@@ -61,7 +61,7 @@ public function listar()
     //Obtener resultado
     $resultado = $this->conexion->query($sql);
 
-    $materiales = [];
+    $pedidos = [];
 
     while($fila = $resultado->fetch_assoc())
         {
@@ -123,6 +123,56 @@ public function buscarPorId($id)
         }
 
         return null;
+}
+
+/**
+ * Actualizar un pedido.
+ *
+ * @param Pedido $pedido
+ * @return bool 
+ */
+
+public function actualizar(Pedido $pedido)
+{
+    //Sentencia SQL
+    $sql = "UPDATE pedido SET fecha = ?, estado = ?, especificacion = ?, id_cliente = ? WHERE id_pedido = ?";
+
+    //Preparar sentencia
+    $stmt = $this->conexion->prepare($sql);
+
+    $fecha = $pedido->getFecha();
+    $estado = $pedido->getEstado();
+    $especificacion = $pedido->getEspecificacion();
+    $idCliente = $pedido->getCliente() ? $pedido->getCliente()->getIdCliente() : null;
+    $id = $pedido->getIdPedido();
+
+    //Asociar parametros
+    $stmt->bind_param("sssii", $fecha, $estado, $especificacion, $idCliente, $id);
+
+    //Ejecutar
+    return $stmt->execute();
+}
+
+/**
+ * Eliminar un pedido.
+ *
+ * @param int 
+ * @return bool 
+ */
+
+public function eliminar($id)
+{
+    //Sentencia SQL
+    $sql = "DELETE FROM pedido WHERE id_pedido = ?";
+
+    //Prepapar sentencia
+    $stmt = $this->conexion->prepare($sql);
+
+    //Asociar parametro
+    $stmt->bind_param("i",$id);
+
+    //Ejecutar
+    return $stmt->execute();
 }
 
 }

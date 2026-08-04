@@ -69,7 +69,7 @@ class Pedido{
 
     //Método opcional para imprimir el objeto como texto
     public function __toString() {
-        $clienteSrt = $this->cliente ? $this->cliente->__toString() : "Sin proveedor";
+        $clienteSrt = $this->cliente ? $this->cliente->__toString() : "Sin cliente";
         return "Pedido [ID: {$this->idPedido}, Fecha: {$this->fecha}, Estado: {$this->estado}, Especificación: {$this->especificacion}, Cliente: {$clienteSrt}]";
     }
 }

@@ -11,6 +11,7 @@
 
 //Se llama a la clase
 require_once("../models/Material.php");
+require_once("../models/Proveedor.php");
 
 class MaterialModel{
     private $conexion;
@@ -89,7 +90,7 @@ public function listar()
 public function buscarPorId($id)
 {
     //Consulta SQL
-    $sql  = "SELECT * FROM material WHERE id_materiall = ?";
+    $sql  = "SELECT * FROM material WHERE id_material = ?";
 
     //Preparar sentencia
     $stmt = $this->conexion->prepare($sql);

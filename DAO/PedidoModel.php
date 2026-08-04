@@ -73,8 +73,8 @@ public function listar()
             $pedido->setIdPedido($fila["id_pedido"]);
             $pedido->setFecha($fila["fecha"]);
             $pedido->setEstado($fila["estado"]);
-            $pedido->setEspecificacion($fila["especificacion"])
-            $pedido->setCliente($cliente;)
+            $pedido->setEspecificacion($fila["especificacion"]);
+            $pedido->setCliente($cliente);
 
             $pedidos[] = $pedido;
         }

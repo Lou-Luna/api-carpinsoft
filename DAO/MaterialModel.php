@@ -72,7 +72,7 @@ public function listar()
             $material->setIdMaterial($fila["id_material"]);
             $material->setNombre($fila["nombre"]);
             $material->setCantidad($fila["cantidad"]);
-            $material->setProveedor($proveedor;)
+            $material->setIdProveedor($proveedor;)
 
             $materiales[] = $material;
         }

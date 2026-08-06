@@ -58,7 +58,7 @@ class Reporte{
 
     // Método opcional para imprimir el objeto como texto
     public function __toString() {
-        $pedidoStr = $this->pedido ? $this->ppedido->__toString() : "Sin pedido";
+        $pedidoStr = $this->pedido ? $this->pedido->__toString() : "Sin pedido";
         return "Reporte [ID: {$this->idReporte}, Tipo: {$this->tipo}, Fecha: {$this->fecha}, Pedido: {$pedidoStr}]";
     }
 

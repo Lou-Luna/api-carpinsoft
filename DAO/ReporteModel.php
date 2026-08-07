@@ -34,8 +34,8 @@ public function guardar(Reporte $reporte)
     //Preparar la consulta
     $stmt = $this->conexion->prepare($sql);
 
-    $tipo = $reporte->gettipo();
-    $fecha = $reporte->getfecha();
+    $tipo = $reporte->getTipo();
+    $fecha = $reporte->getFecha();
     $idPedido = $reporte->getPedido() ? $reporte->getPedido()->getIdPedido() : null;
 
     //Asociar parametros
@@ -64,15 +64,15 @@ public function listar()
 
     while($fila = $resultado->fetch_assoc())
         {
-            $pedido = new pedido$pedido(); 
+            $pedido = new Pedido $pedido(); 
             $pedido->setIdPedido($fila["id_pedido"]);
 
-            $reporte = new reporte();
+            $reporte = new Reporte();
 
             $reporte->setIdReporte($fila["id_reporte"]);
-            $reporte->settipo($fila["tipo"]);
-            $reporte->setfecha($fila["fecha"]);
-            $reporte->setPedido($pedido;)
+            $reporte->setTipo($fila["tipo"]);
+            $reporte->setFecha($fila["fecha"]);
+            $reporte->setPedido($pedido);
 
             $reportes[] = $reporte;
         }
@@ -107,13 +107,13 @@ public function buscarPorId($id)
     if($fila = $resultado->fetch_assoc())
         {
             $pedido = new Pedido();
-            $pedido->setIdpedido($fila["id_pedido"]);
+            $pedido->setIdPedido($fila["id_pedido"]);
 
             $reporte = new Reporte();
 
-            $reporte->setIdreporte($fila["id_reporte"]);
-            $reporte->settipo($fila["tipo"]);
-            $reporte->setfecha($fila["fecha"]);
+            $reporte->setIdReporte($fila["id_reporte"]);
+            $reporte->setTipo($fila["tipo"]);
+            $reporte->setFecha($fila["fecha"]);
             $reporte->setPedido($pedido);
 
             return $reporte;
@@ -137,13 +137,13 @@ public function actualizar(Reporte $reporte)
     //Preparar sentencia
     $stmt = $this->conexion->prepare($sql);
 
-    $tipo = $reporte->gettipo();
-    $fecha = $reporte->getfecha();
-    $idpedido$pedido = $reporte->getPedido() ? $reporte->getPedido()->getIdpedido() : null;
-    $id = $reporte->getIdreporte();
+    $tipo = $reporte->getTipo();
+    $fecha = $reporte->getFecha();
+    $idPedido = $reporte->getPedido() ? $reporte->getPedido()->getIdPedido() : null;
+    $id = $reporte->getIdReporte();
 
     //Asociar parametros
-    $stmt->bind_param("ssii", $tipo, $fecha, $idpedido, $id);
+    $stmt->bind_param("ssii", $tipo, $fecha, $idPedido, $id);
 
     //Ejecutar
     return $stmt->execute();

@@ -75,7 +75,7 @@ public function listar()
             $tarea = new Tarea();
 
             $tarea->setIdtarea($fila["id_tarea"]);
-            $tarea->setdescripcion($fila["descripcion"]);
+            $tarea->setDescripcion($fila["descripcion"]);
             $tarea->setEstado($fila["estado"]);
             $tarea->setPedido($pedido);
             $tarea->setOperario($operario);
@@ -121,8 +121,8 @@ public function buscarPorId($id)
             $tarea = new tarea();
 
             $tarea->setIdtarea($fila["id_tarea"]);
-            $tarea->setestado($fila["estado"]);
-            $tarea->setdescripcion($fila["descripcion"]);
+            $tarea->setEstado($fila["estado"]);
+            $tarea->setDescripcion($fila["descripcion"]);
             $tarea->setPedido($pedido);
             $tarea->setOperario($operario);
 
@@ -149,9 +149,9 @@ public function actualizar(Tarea $tarea)
 
     $descripcion = $tarea->getDescripcion();
     $estado = $tarea->getEstado();
-    $idPedido = $tarea->getPedido() ? $tarea->getPedido()->getIdpedido() : null;
+    $idPedido = $tarea->getPedido() ? $tarea->getPedido()->getIdPedido() : null;
     $idOperario = $tarea-getOperario() ? $tarea->getOperario()->getIdOperario() : null;
-    $id = $tarea->getIdtarea();
+    $id = $tarea->getIdTarea();
 
     //Asociar parametros
     $stmt->bind_param("ssiii", $estado, $descripcion, $idPedido, $idOperario, $id);

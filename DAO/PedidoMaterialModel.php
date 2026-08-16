@@ -32,7 +32,7 @@ class PedidoMaterial{
 public function guardar($idPedido, $idMaterial, $cantidadUsada)
 {
     //Sentencia SQL
-    $sql = "INSERT INTO pedido_material (id_pedido, id_material, cantidad usada) VALUES (?, ?, ?)"
+    $sql = "INSERT INTO pedido_material (id_pedido, id_material, cantidad_usada) VALUES (?, ?, ?)";
 
     //Preparar sentencia
     $stmt = $this->conexion->prepare($sql);

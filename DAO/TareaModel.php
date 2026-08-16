@@ -11,7 +11,7 @@
 
 //Se llama a la clase
 require_once("../models/Pedido.php");
-require_once("../models/Operario .php");
+require_once("../models/Operario.php");
 
 class TareaModel{
     private $conexion;

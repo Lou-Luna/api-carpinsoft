@@ -66,10 +66,10 @@ public function listar()
 
     while($fila = $resultado->fetch_assoc())
         {
-            $pedido = new Pedido $pedido(); 
+            $pedido = new Pedido(); 
             $pedido->setIdPedido($fila["id_pedido"]);
 
-            $operario = new Operario $operario();
+            $operario = new Operario();
             $operario->setIdOperario($fila["id_operario"]);
 
             $tarea = new Tarea();
@@ -116,9 +116,9 @@ public function buscarPorId($id)
             $pedido->setIdPedido($fila["id_pedido"]);
 
             $operario = new Operario();
-            $operario->setIdOperario($fila["id_operario"])
+            $operario->setIdOperario($fila["id_operario"]);
 
-            $tarea = new tarea();
+            $tarea = new Tarea();
 
             $tarea->setIdtarea($fila["id_tarea"]);
             $tarea->setEstado($fila["estado"]);

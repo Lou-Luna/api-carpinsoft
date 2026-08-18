@@ -64,7 +64,7 @@ public function listar()
 
     while($fila = $resultado->fetch_assoc())
         {
-            $pedido = new Pedido $pedido(); 
+            $pedido = new Pedido(); 
             $pedido->setIdPedido($fila["id_pedido"]);
 
             $reporte = new Reporte();

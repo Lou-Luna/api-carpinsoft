@@ -38,11 +38,11 @@ class Operario{
         $this->nombre = $nombre;
     }
 
-    public function setRol(){
+    public function getRol(){
         return $this->rol;
     }
 
-    public function getRol($rol){
+    public function setRol($rol){
         $this->rol = $rol;
     }
 

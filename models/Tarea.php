@@ -23,7 +23,7 @@ class Tarea{
 
     //Constructor
     public function __construct($idTarea = null, $descripcion = null, $estado = null, ?Pedido $pedido = null, ?Operario $operario = null) {
-        $this->idTarea = $idTarea
+        $this->idTarea = $idTarea;
         $this->descripcion = $descripcion;
         $this->estado = $estado;
         $this->pedido = $pedido;

@@ -22,7 +22,7 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 switch ($metodo) {
     case 'GET':
         //Listar reportes
-        $reportes = $reporte->listar();
+        $reportes = $reporteModel->listar();
         $respuesta = [];
         foreach ($reportes as $r)
         {
@@ -57,7 +57,7 @@ switch ($metodo) {
         );
 
         if (!empty($data['id_reporte'])){
-            $exito = $reporte->actualizar($reporteObj);
+            $exito = $reporteModel->actualizar($reporteObj);
         } else {
             $exito = $reporte->guardar($reporteObj);
         }

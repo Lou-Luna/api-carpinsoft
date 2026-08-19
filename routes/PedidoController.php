@@ -2,7 +2,7 @@
 
 /*
 |
-| Controlador proveedor
+| Controlador pedido
 |
 | Este archivo contiene todas las operaciones relacionadas con la conexión
 | entre el crud y la visual.
@@ -69,7 +69,7 @@ switch ($metodo) {
 
     case 'DELETE':
         //Eliminar pedido
-        $id = $_GET['id'] ?? null;
+        $id = $_GET['id_pedido'] ?? null;
         if ($id) {
             $exito = $pedidoModel->eliminar($id);
             echo json_encode(['success' => $exito]);

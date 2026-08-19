@@ -58,7 +58,7 @@ switch ($metodo) {
 
         case 'DELETE':
         //Eliminar cliente
-        $id = $_GET['id'] ?? null;
+        $id = $_GET['id_cliente'] ?? null;
         if ($id) {
             $exito = $clienteModel->eliminar($id);
             echo json_encode(['success' => $exito]);

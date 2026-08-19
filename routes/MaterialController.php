@@ -68,7 +68,7 @@ switch ($metodo) {
 
     case 'DELETE':
         //Eliminar material
-        $id = $_GET['id'] ?? null;
+        $id = $_GET['id_material'] ?? null;
         if ($id) {
             $exito = $materialModel->eliminar($id);
             echo json_encode(['success' => $exito]);

@@ -2,7 +2,7 @@
 
 /*
 |
-| Controlador cliente
+| Controlador 
 |
 | Este archivo contiene todas las operaciones relacionadas con la conexión
 | entre el crud y la visual.

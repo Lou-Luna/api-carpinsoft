@@ -14,7 +14,7 @@ require_once("../models/PedidoMaterial.php");
 require_once("../models/Pedido.php");
 require_once("../models/Material.php");
 
-class PedidoMaterial{
+class PedidoMaterialModel{
     private $conexion;
     public function __construct($conexion){
         $this->conexion = $conexion;
@@ -44,10 +44,16 @@ public function guardar($idPedido, $idMaterial, $cantidadUsada)
     return $stmt->execute();
 }
 
+/**
+ * Listar materiales asociados a un pedido.
+ *
+ * @param int 
+ * @return array
+ */
 public function listarPorPedido($idPedido)
 {
     //Sentencia SQL
-    $sql = "SELECT m.* FROM material m INNER JOIN pedido_material pm ON m.id_material = pm.id_material WHERE pm.id_pedido = ?";
+    $sql = "SELECT m.id_material, m.nombre, pm.cantidad_usada FROM material m INNER JOIN pedido_material pm ON m.id_material = pm.id_material WHERE pm.id_pedido = ?";
 
     //Preprar sentencia 
     $stmt = $this->conexion->prepare($sql);
@@ -63,15 +69,41 @@ public function listarPorPedido($idPedido)
 
      $materiales = [];
 
-    while($fila = $resultado->fetch_assoc()) 
-        {
+    while($fila = $resultado->fetch_assoc()) {
             $material = new Material();
             $material->setIdMaterial($fila["id_material"]);
             $material->setNombre($fila["nombre"]);
-            $material->setCantidadUsada($fila["cantidad"]);
-            $materiales[] = $material;
+
+            $pedido = new Pedido();
+            $pedido->setIdPedido($idPedido);
+
+            $pm = new PedidoMaterial($pedido, $material, $fila["cantidad_usada"]);
+            $lista[] = $pm;
         }
-        return $materiales;
+        return $lista;
+}
+
+/**
+     * Actualizar la cantidad usada de un material en un pedido.
+     *
+     * @param int 
+     * @param int 
+     * @param int 
+     * @return bool
+     */
+public function actualizar($idPedido, $idMaterial, $cantidadUsada) {
+
+    // Sentencia SQL
+    $sql = "UPDATE pedido_material SET cantidad_usada = ? WHERE id_pedido = ? AND id_material = ?";
+
+    // Preparar sentencia
+    $stmt = $this->conexion->prepare($sql);
+
+    // Asociar parámetros
+    $stmt->bind_param("iii", $cantidadUsada, $idPedido, $idMaterial);
+    
+    // Ejecutar
+    return $stmt->execute();
 }
 
 
@@ -97,7 +129,6 @@ public function eliminar($idPedido, $idMaterial)
     //Ejecutar
     return $stmt->execute();
 }
-
 }
 
 ?>

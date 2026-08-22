@@ -10,6 +10,9 @@
 */
 
 //Se llama a la clase
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=UTF-8");
 require_once("../config/conexion.php");
 require_once("../models/Cliente.php");
@@ -26,7 +29,7 @@ switch ($metodo) {
         foreach ($clientes as $c)
         {
             $respuesta[] = [
-                'id' => $c->getIdCliente(),
+                'id_cliente' => $c->getIdCliente(),
                 'nombre' => $c->getNombre(),
                 'contacto' => $c->getContacto(),
                 'direccion' => $c->getDireccion()
@@ -58,11 +61,14 @@ switch ($metodo) {
 
         case 'DELETE':
         //Eliminar cliente
-        $id = $_GET['id_cliente'] ?? null;
+        $id = $_GET['id'] ?? null;
         if ($id) {
             $exito = $clienteModel->eliminar($id);
             echo json_encode(['success' => $exito]);
+        }else {
+            echo json_encode(['success' => false, 'message' => 'ID de cliente no proporcionado']);
         }
+
         break;
 }
 

@@ -15,13 +15,13 @@ $password = "";
 $baseDatos = "carpinsoft";
 
 // Crear la conexión
-$conn = new mysqli($host, $usuario, $password, $baseDatos);
+$conexion = new mysqli($host, $usuario, $password, $baseDatos);
 
 // Verificar si ocurrió algún error
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
+if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
 }
 
 // Establecer la codificación UTF-8 para evitar problemas con caracteres especiales
-$conn->set_charset("utf8");
+$conexion->set_charset("utf8");
 ?>

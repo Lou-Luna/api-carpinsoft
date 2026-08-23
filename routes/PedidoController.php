@@ -10,6 +10,9 @@
 */
 
 //Se llama a la clase
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=UTF-8");
 require_once("../config/conexion.php");
 require_once("../models/Pedido.php");
@@ -26,14 +29,15 @@ switch ($metodo) {
         $respuesta = [];
         foreach ($pedidos as $p)
         {
-            $clienteObj = $p->getProveedor();
+            $clienteObj = $p->getCliente();
 
             $respuesta[] = [
                 'id_pedido' => $p->getIdPedido(),
                 'fecha' => $p->getFecha(),
                 'estado' => $p->getEstado(),
                 'especificacion' => $p->getEspecificacion(),
-                'id_cliente' => $clienteObj ? $clienteObj->getIdCliente() : null
+                'id_cliente' => $clienteObj ? $clienteObj->getIdCliente() : null,
+                'nombre_cliente' => $clienteObj ? $clienteObj->getNombre() : 'Sin cliente'
             ];
         }
         echo json_encode($respuesta);

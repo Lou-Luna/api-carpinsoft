@@ -28,7 +28,7 @@ if (
     }
 
 //Crear el modelo Usuario
-$usuarioModel = new Usuario($conn);
+$usuarioModel = new Usuario($conexion);
 
 //Validar las credenciales
 $respuesta = $usuarioModel->iniciarSesion(

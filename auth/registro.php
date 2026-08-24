@@ -28,7 +28,7 @@ if (
     }
 
 //Crear el objeto Usuario
-$usuarioModel = new Usuario($conn);
+$usuarioModel = new Usuario($conexion);
 
 //Registrar el usuario
 $respuesta = $usuarioModel->registrar(

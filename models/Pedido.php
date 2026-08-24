@@ -28,7 +28,7 @@ class Pedido{
     }
 
     public function getIdPedido(){
-        return $this->IdPedido;
+        return $this->idPedido;
     }
 
     public function setIdPedido($idPedido){

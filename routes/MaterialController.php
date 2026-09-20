@@ -56,6 +56,13 @@ switch ($metodo) {
             exit;
         }
 
+        //Validar cantidad no negativa
+        $cantidad = $data['cantidad'] ?? 0;
+        if ($cantidad <= 0) {
+        echo json_encode(['success' => false, 'message' => 'La cantidad no puede ser negativa']);
+        exit;
+        }
+
         $material = new Material(
             $data['id_material'] ?? null,
             $data['nombre'] ?? '',

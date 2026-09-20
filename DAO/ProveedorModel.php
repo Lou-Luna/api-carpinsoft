@@ -128,13 +128,21 @@ public function actualizar(Proveedor $proveedor)
     //Preparar sentencia
     $stmt = $this->conexion->prepare($sql);
 
+    if (!$stmt) {
+        return false; // Manejar error de preparación de la sentencia
+    }
+
     $nombre = $proveedor->getNombre();
     $contacto = $proveedor->getContacto();
     $id = $proveedor->getIdProveedor();
 
+    
     //Asociar parametros
     $stmt->bind_param("ssi", $nombre, $contacto, $id);
 
+    if (!$stmt->execute()) {
+        return false; 
+    }
     //Ejecutar
     return $stmt->execute();
 }

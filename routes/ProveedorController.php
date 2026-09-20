@@ -42,13 +42,22 @@ switch ($metodo) {
         //Guardar o actualizar proveedor
         $data = json_decode(file_get_contents("php://input"), true);
 
+        if (!$data){
+            echo json_encode(['success' => false, 'message' => 'Sin datos']);
+            exit();
+        }
+
+        //Capturar los datos del proveedor desde la solicitud
+        $id = !empty($data['id_proveedor']) ? $data['id_proveedor'] : (!empty($data['id']) ? $data['id'] : null);
+
         $proveedor = new Proveedor(
-            $data['id_proveedor'] ?? null,
+            $id,
             $data['nombre'] ?? '',
             $data['contacto'] ?? ''
         );
 
-        if (!empty($data['id_proveedor'])){
+        //Si ya hay ID se actualiza, si no se guarda como nuevo proveedor
+        if ($id !== null && $id !== "") {
             $exito = $proveedorModel->actualizar($proveedor);
         } else {
             $exito = $proveedorModel->guardar($proveedor);

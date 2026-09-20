@@ -34,9 +34,19 @@ public function guardar(Material $material)
     //Preparar la consulta
     $stmt = $this->conexion->prepare($sql);
 
+    if (!$stmt) {
+        return false;
+    }
+
     $nombre = $material->getNombre();
-    $cantidad = $material->getCantidad();
-    $idProveedor = $material->getProveedor() ? $material->getProveedor()->getIdProveedor() : null;
+    $cantidad = (int) $material->getCantidad();
+    
+    $proveedorObj = $material->getProveedor();
+    $idProveedor = ($proveedorObj && $proveedorObj->getIdProveedor()) ? (int)$proveedorObj->getIdProveedor() : null;
+
+    if (empty($idProveedor)) {
+        return false;
+    }
 
     //Asociar parametros
     $stmt->bind_param("sii", $nombre, $cantidad, $idProveedor);
@@ -55,7 +65,14 @@ public function guardar(Material $material)
 public function listar()
 {
     //Consulta SQL
-    $sql = "SELECT * FROM material";
+    $sql = "SELECT 
+                m.id_material, 
+                m.nombre AS nombre_material, 
+                m.cantidad, 
+                m.id_proveedor, 
+                p.nombre AS nombre_proveedor
+            FROM material m
+            LEFT JOIN proveedor p ON m.id_proveedor = p.id_proveedor";
 
     //Obtener resultado
     $resultado = $this->conexion->query($sql);
@@ -67,12 +84,17 @@ public function listar()
             $proveedor = new Proveedor(); 
             $proveedor->setIdProveedor($fila["id_proveedor"]);
 
+            if (isset($fila["nombre_proveedor"])) {
+            $proveedor->setNombre($fila["nombre_proveedor"]);
+          }
+
             $material = new Material();
 
             $material->setIdMaterial($fila["id_material"]);
-            $material->setNombre($fila["nombre"]);
+            $material->setNombre($fila["nombre_material"]);
             $material->setCantidad($fila["cantidad"]);
-            $material->setIdProveedor($proveedor);
+
+            $material->setProveedor($proveedor);
 
             $materiales[] = $material;
         }
@@ -83,7 +105,7 @@ public function listar()
 /**
  * Buscar un material.
  *
- * @param int 
+ * @param int $id
  * @return Material
  */
 
@@ -112,7 +134,7 @@ public function buscarPorId($id)
             $material = new Material();
 
             $material->setIdMaterial($fila["id_material"]);
-            $material->setNombre($fila["nombre"]);
+            $material->setNombre($fila["nombre_material"]);
             $material->setCantidad($fila["cantidad"]);
             $material->setProveedor($proveedor);
 
@@ -137,11 +159,23 @@ public function actualizar(Material $material)
     //Preparar sentencia
     $stmt = $this->conexion->prepare($sql);
 
-    $nombre = $material->getNombre();
-    $cantidad = $material->getCantidad();
-    $idProveedor = $material->getProveedor() ? $material->getProveedor()->getIdProveedor() : null;
-    $id = $material->getIdMaterial();
+    if (!$stmt) {
+        return false;
+    }
 
+    $nombre = $material->getNombre();
+    $cantidad = (int) $material->getCantidad();
+    
+    // Extraer el ID del proveedor de manera segura
+    $proveedorObj = $material->getProveedor();
+    $idProveedor = ($proveedorObj && $proveedorObj->getIdProveedor()) ? (int)$proveedorObj->getIdProveedor() : null;
+    
+    $id = (int) $material->getIdMaterial();
+
+    // Validar que exista un id_proveedor válido para no romper la foreign key
+    if (empty($idProveedor)) {
+        return false;
+    }
     //Asociar parametros
     $stmt->bind_param("siii", $nombre, $cantidad, $idProveedor, $id);
 

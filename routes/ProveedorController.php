@@ -10,6 +10,10 @@
 */
 
 //Se llama a la clase
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
 header("Content-Type: application/json; charset=UTF-8");
 require_once("../config/conexion.php");
 require_once("../models/Proveedor.php");

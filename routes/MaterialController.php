@@ -10,6 +10,9 @@
 */
 
 //Se llama a la clase
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=UTF-8");
 require_once("../config/conexion.php");
 require_once("../models/Proveedor.php");
@@ -48,6 +51,9 @@ switch ($metodo) {
         if (!empty($data['id_proveedor'])) {
             $proveedor = new Proveedor();
             $proveedor->setIdProveedor($data['id_proveedor']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'El proveedor es obligatorio']);
+            exit;
         }
 
         $material = new Material(

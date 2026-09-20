@@ -56,7 +56,9 @@ public function guardar(Pedido $pedido)
 public function listar()
 {
     //Consulta SQL
-    $sql = "SELECT * FROM pedido";
+    $sql = "SELECT 
+                p.id_pedido, p.fecha, p.estado, p.especificacion, c.id_cliente, c.nombre AS nombre_cliente 
+                FROM pedido p LEFT JOIN cliente c ON p.id_cliente = c.id_cliente";
 
     //Obtener resultado
     $resultado = $this->conexion->query($sql);
@@ -67,6 +69,10 @@ public function listar()
         {
             $cliente = new Cliente(); 
             $cliente->setIdCliente($fila["id_cliente"]);
+
+            if (isset($fila["nombre_cliente"])) {
+                $cliente->setNombre($fila["nombre_cliente"]);
+            }
 
             $pedido = new Pedido();
 

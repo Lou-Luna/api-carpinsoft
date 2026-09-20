@@ -17,7 +17,7 @@ class Proveedor {
 
     //Constructor
     public function __construct($idProveedor = null, $nombre = null, $contacto = null) {
-        $this->idProveedor = $idPoveedor;
+        $this->idProveedor = $idProveedor;
         $this->nombre = $nombre;
         $this->contacto = $contacto;
     }    
